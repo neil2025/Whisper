@@ -1,20 +1,108 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Document</title>
   <style>
     body {
-      background-color: rgb(106, 177, 240);
+      background-color: rgb(100, 100, 100);
+    }
+
+    label {
+      color: black;
+    }
+
+    .wrap {
+      border-radius: 20px;
+      padding: 20px;
+      bottom: 20px;
+      position: absolute;
+      background-color: aliceblue;
+      left: 20px;
+      border: 2px solid black;
+    }
+
+    .wrap:hover,
+    div.output:hover {
+      background-color: rgb(164, 216, 218);
+      transition: 0.35s;
+    }
+
+    form {
+      display: grid;
+    }
+
+    form.row label {
+      grid-column: 0;
+    }
+
+    form.row input {
+      grid-column: 1;
+    }
+
+    .output {
+      position: relative;
+      padding: 200px;
+      border-radius: 30px;
+      border: 2px solid black;
+      background-color: aliceblue;
     }
   </style>
+
+<script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.11/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.6.11/firebase-analytics.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  const firebaseConfig = {
+    apiKey: "AIzaSyChlawVUQ3xX8_6RkjzYLLyJtVX5ETAs9s",
+    authDomain: "whisper-41b5e.firebaseapp.com",
+    projectId: "whisper-41b5e",
+    storageBucket: "whisper-41b5e.appspot.com",
+    messagingSenderId: "395355701402",
+    appId: "1:395355701402:web:dd63d71a33a548cc199f23",
+    measurementId: "G-BDNHYDLVW4"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+
+</script>
+
+<script src="script.js" defer></script>
+
 </head>
+
 <body>
-  <form>
-    <label>Do something</label>
-    <input type="text">
-  </form>
+  <div class="output"></div>
+  <div class="wrap">
+    <form id = "sendContainer">
+
+      <div class="row">
+        <label>Message: </label>
+        <input type="text" id = "messageContainer"/>
+      </div>
+
+      <div class="row">
+        <label>Name:</label>
+        <input type="text"/>
+      </div>
+
+      <div class="row">
+        <button id = "sendButton">Send</button>
+      </div>
+
+    </form>
+  </div>
+
 </body>
+
 </html>
