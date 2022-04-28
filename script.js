@@ -2,15 +2,14 @@
 
 let send = (e) => {
     e.preventDefault();
-    Content = document.getElementById('message').value;
-    User = document.getElementById('username').value;
-    db = ref(database, path = 'messages/'+Date.now());
+    let Content = document.getElementById('message').value;
+    let User = document.getElementById('username').value;
+    let db = ref(database, path = 'messages/'+Date.now());
     set(db, {
         msg: Content,
         user : User
     });
     document.getElementById('message').value ='';
-     User = '';
 }
 
 document.getElementById('sendForm').addEventListener('submit', send);
@@ -24,3 +23,6 @@ onValue(ref(database, 'messages/'), (snap) => {
     document.getElementById('textOutput').innerHTML = outputString;
     console.log(outputString);
 })
+
+// get canvas data
+

@@ -1,0 +1,46 @@
+body {
+    background-color: rgb(100, 100, 100);
+  }
+
+  label {
+    color: black;
+  }
+
+  .wrap {
+    border-radius: 20px;
+    padding: 20px;
+    bottom: 20px;
+    position: absolute;
+    background-color: aliceblue;
+    left: 20px;
+    border: 2px solid black;
+  }
+
+  .wrap:hover,
+  div.output:hover {
+    background-color: rgb(164, 216, 218);
+    transition: 0.35s;
+  }
+
+  form {
+    display: grid;
+  }
+
+  form.row label {
+    grid-column: 0;
+  }
+
+  form.row input {
+    grid-column: 1;
+  }
+
+  .output {
+    position: relative;
+    width: 1000px;
+    height: auto;
+    padding: 50px;
+    border-radius: 30px;
+    border: 2px solid black;
+    background-color: aliceblue;
+    white-space: pre;
+  }
