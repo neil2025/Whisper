@@ -11,28 +11,39 @@
 </head>
 
 <body>
-  <div class="output">
-    <p id="textOutput"></p>
-  </div>
-  <div class="wrap">
-    <form id = "sendForm" autocomplete="off">
+    <div class="output">
+      <p id="textOutput"></p>
+    </div>
 
-      <div class="row">
-        <label>Message: </label>
-        <input type="text" id = "message"/>
-      </div>
+    <div id="courses" class="wrap">
+      <form id="courseSelector">
+        
+      </form>
+    </div>
+    
+    <div class="wrap">
+      <form id = "sendForm" autocomplete="off">
+        <div class="row">
+          <label>Message: </label>
+          <input type="text" id = "message"/>
+        </div>
+        <div class="row">
+          <label>Name:</label>
+          <input type="text" id = "username"/>
+        </div>
+        <div class="row">
+          <input type="submit" value="Submit!">
+        </div>
+      </form>
+    </div>
 
-      <div class="row">
-        <label>Name:</label>
-        <input type="text" id = "username"/>
-      </div>
-
-      <div class="row">
-        <input type="submit" value="Submit!">
-      </div>
-
-    </form>
-  </div>
+    <div class="wrap" id="login">
+      <button onClick="getCourses()">Login</button>
+      <form action="" id="getCourses" autocomplete="off">  
+        <input type="text" id="coursesEntry">
+        <p>Login will redirect, copy all content of redirect to text entry</p>
+      </form>
+    </div>
 
   <script type="module">
     // Import the functions you need from the SDKs you need

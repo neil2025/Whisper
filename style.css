@@ -1,46 +1,56 @@
 body {
-    background-color: rgb(100, 100, 100);
-  }
+  background-color: rgb(100, 100, 100);
+}
 
-  label {
-    color: black;
-  }
+label {
+  color: black;
+}
 
-  .wrap {
-    border-radius: 20px;
-    padding: 20px;
-    bottom: 20px;
-    position: absolute;
-    background-color: aliceblue;
-    left: 20px;
-    border: 2px solid black;
-  }
+.wrap {
+  border-radius: 20px;
+  padding: 20px;
+  display: inline-block;
+  background-color: aliceblue;
+  border: 2px solid black;
+}
 
-  .wrap:hover,
-  div.output:hover {
-    background-color: rgb(164, 216, 218);
-    transition: 0.35s;
-  }
+#courses {
+  display: inline-block;
+  width: 200px;
+  top: 20px;
+}
 
-  form {
-    display: grid;
-  }
+.wrap:hover,
+div.output:hover {
+  background-color: rgb(164, 216, 218);
+  transition: 0.35s;
+}
 
-  form.row label {
-    grid-column: 0;
-  }
+form {
+  display: grid;
+}
 
-  form.row input {
-    grid-column: 1;
-  }
+form.row label {
+  grid-column: 0;
+}
 
-  .output {
-    position: relative;
-    width: 1000px;
-    height: auto;
-    padding: 50px;
-    border-radius: 30px;
-    border: 2px solid black;
-    background-color: aliceblue;
-    white-space: pre;
-  }
+form.row input {
+  grid-column: 1;
+}
+
+.output {
+  display: inline-block;
+  width: 1000px;
+  height: auto;
+  border-radius: 30px;
+  padding: 20px;
+  border: 2px solid black;
+  background-color: aliceblue;
+  white-space: pre;
+}
+
+.courses {
+  position: relative;
+  display: block;
+  width: auto;
+}
