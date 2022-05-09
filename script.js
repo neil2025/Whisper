@@ -2,6 +2,7 @@
 var form = document.getElementById("sendForm");
 var messagePath = ``;
 var courses;
+var outputString;
 let send = (e) => {
   e.preventDefault();
   let Content = form.elements[0].value;
@@ -21,13 +22,13 @@ form.addEventListener("submit", send);
 onValue(ref(database, `messages/`), (snap) => {
   let value;
   if (messagePath !== "") {
-    value = snap.val().messagePath;
+    value = snap.val()[messagePath];
   } else {
     value = snap.val();
   }
-  var outputString = "";
+  outputString = "";
   for (key in value) {
-    outputString += `${snap.val()[key].user}: ${snap.val()[key].msg}` + "\n";
+    outputString += `${value[key].user}: ${value[key].msg}` + "\n";
   }
   document.getElementById("textOutput").innerHTML = outputString;
 });
@@ -63,19 +64,20 @@ function makeButtons(cs) {
 
     document.getElementById(item.ClassID).addEventListener("click", (e) => {
       messagePath = `${e.target.id}`;
-      let reference = ref(database, messagePath);
 
-      get(child(reference, messagePath)).then((snap) => {
+      get(child(ref(database), `messages/${messagePath}/`)).then((snap) => {
+        console.log(snap.val());
         outputString = "";
         if (snap.exists()) {
           for (key in snap.val()) {
             outputString +=
               `${snap.val()[key].user}: ${snap.val()[key].msg}` + "\n";
           }
-        } else {
+          document.getElementById("textOutput").innerHTML = outputString;
+        } else if (confirm(`No chat exists for this course. Make new chat for course "${e.target.value}"?`)) {
           set(ref(database, `messages/${messagePath}/${Date.now()}`), {
-              msg: `Welcome  to  ${e.target.value}!`,
-              user: form.elements[1].value,
+            msg: `Welcome to ${e.target.value}!`,
+            user: form.elements[1].value,
           });
 
           for (key in snap.val()) {
@@ -83,25 +85,30 @@ function makeButtons(cs) {
               `${snap.val()[key].user}: ${snap.val()[key].msg}` + "\n";
           }
 
+          document.getElementById("textOutput").innerHTML = outputString;
+        } else {
+          messagePath = '';
         }
+        
+      })
 
-      });
-    });
+    })
   }
 }
 
 document.getElementById('getCourses').addEventListener('submit', (e) => {
-    e.preventDefault();
-    let entry = document.getElementById('coursesEntry');
-    courses = JSON.parse(entry.value).filter(o => (o.start_at.split('-')[0] == '2021')).map((i) => 
-    {
-        return {
-            Name: i.name,
-            ClassID: i.id,
-        }
-    });
+  e.preventDefault();
+  let entry = document.getElementById('coursesEntry');
+  courses = JSON.parse(entry.value).filter(o => (o.start_at.split('-')[0] == '2021')).map((i) => {
+    return {
+      Name: i.name,
+      ClassID: i.id,
+    }
+  });
 
-    window.localStorage.setItem('studentCourses', JSON.stringify(courses));
-    entry.value = '';
-    makeButtons(courses);
+  window.localStorage.setItem('studentCourses', JSON.stringify(courses));
+  entry.value = '';
+  makeButtons(courses);
 });
+
+
