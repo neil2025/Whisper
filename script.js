@@ -3,20 +3,16 @@ var form = document.getElementById("sendForm");
 var messagePath = ``;
 var courses;
 var outputString;
-let send = (e) => {
+form.addEventListener("submit", (e) => {
   e.preventDefault();
   let Content = form.elements[0].value;
-  let User = form.elements[1].value;
-  window.localStorage.setItem("username", User);
   const db = ref(database, (path = `messages/${messagePath}/${Date.now()}`));
   set(db, {
     msg: Content,
-    user: User,
+    user: window.localStorage.getItem("username"),
   });
-  document.getElementById("message").value = "";
-};
-
-form.addEventListener("submit", send);
+  form.elements[0].value = "";
+});
 // append new changes to 'output' div
 
 onValue(ref(database, `messages/`), (snap) => {
@@ -38,7 +34,6 @@ onValue(ref(database, `messages/`), (snap) => {
 window.onload = () => {
   try {
     courses = JSON.parse(window.localStorage.getItem("studentCourses"));
-    form.elements[1].value = window.localStorage.getItem("username");
     makeButtons(courses);
   } catch (err) {
     showModal();
@@ -64,7 +59,6 @@ function makeButtons(cs) {
       messagePath = `${e.target.id}`;
 
       get(child(ref(database), `messages/${messagePath}/`)).then((snap) => {
-        console.log(snap.val());
         outputString = "";
         if (snap.exists()) {
           for (key in snap.val()) {
@@ -79,7 +73,7 @@ function makeButtons(cs) {
         ) {
           set(ref(database, `messages/${messagePath}/${Date.now()}`), {
             msg: `Welcome to ${e.target.value}!`,
-            user: form.elements[1].value,
+            user: window.localStorage.getItem('username'),
           });
 
           for (key in snap.val()) {
@@ -103,23 +97,31 @@ function showModal() {
   setTimeout(() => {
     modal.showModal();
     modal.style.top = "0px";
-  }, 1000);
+  }, 500);
 
   let courseForm = document.getElementById("courseForm");
   courseForm.addEventListener("submit", (e) => {
     e.preventDefault();
-    modal.close();
-    courses = JSON.parse(courseForm.elements[0].value)
-      .filter((o) => o.start_at.split("-")[0] == "2021")
-      .map((i) => {
-        return {
-          Name: i.name,
-          ClassID: i.id,
-        };
-      });
+    let formData = [];
+    for (let b of courseForm.elements) {
+      formData.push(b.value);
+    }
+    if (!formData.includes('')) {
+      modal.close();
+      courses = JSON.parse(courseForm.elements[0].value)
+        .filter((o) => o.start_at.split("-")[0] == "2021")
+        .map((i) => {
+          return {
+            Name: i.name,
+            ClassID: i.id,
+          };
+        });
 
-    window.localStorage.setItem("studentCourses", JSON.stringify(courses));
-    entry.value = "";
-    makeButtons(courses);
+      window.localStorage.setItem("studentCourses", JSON.stringify(courses));
+      window.localStorage.setItem("username", courseForm.elements[1].value);
+      makeButtons(courses)
+    } else {
+      alert('Please Fill al Fields'); // This is temporary, add css-based alert later
+    }
   });
 }

@@ -11,26 +11,28 @@
   <body>
     <dialog class="modal" id="loginWindow">
       <h2>Welcome to Whisper!</h2>
-      <p>The button below will redirect you to another page. Copy the contents of that page and paste it into the text entry field.</p>
+      <p>The button below will redirect you to another page. Copy the contents of that page and paste it into the appropriate text entry field.</p>
       <button onclick="window.open('https://dwight.instructure.com/api/v1/courses', '', 'popup')">
         Login
       </button>
-      <form id="courseForm">
-        <input type="text" />
+
+      <form id="courseForm" style="display: grid;" autocomplete="off">
+        <label for="canvasCopy">Paste Data Here: </label>
+        <input type="text" name="canvasCopy"/>
+        <label for="username">Username: </label>
+        <input type="text" name="username" >
+        <input type="submit" value="Submit">
       </form>
     </dialog>
 
-    <div class="output">
-      <p id="textOutput"></p>
-    </div>
-    <div class="courses"></div>
-    <div class="wrap">
+    <pre id="textOutput"></pre>
+
+    <div id="courses"></div>
+
       <form id="sendForm" autocomplete="off">
-        <input type="text" id="username" />
-        <input type="text" />
+        <input type="text"/>
         <input type="submit" value="✔️" />
       </form>
-    </div>
 
     <script type="module">
       // Import the functions you need from the SDKs you need
@@ -70,7 +72,6 @@
       window.get = get;
       window.child = child;
     </script>
-
     <script src="script.js" defer></script>
   </body>
 </html>
