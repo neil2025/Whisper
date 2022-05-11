@@ -33,21 +33,19 @@ onValue(ref(database, `messages/`), (snap) => {
   document.getElementById("textOutput").innerHTML = outputString;
 });
 
-// get canvas data
-// API KEY: 4851~XAVozN0ZoKzbGzkS5nabWUpQ0yHtwx1FCpMt40EACu55NASF2pFg13BNm48kF8YG
+// Get Canvas Class Data
 
-try {
-  courses = JSON.parse(window.localStorage.getItem("studentCourses"));
-  form.elements[1].value = window.localStorage.getItem("username");
-  makeButtons(courses);
-} catch (err) {
-  document.getElementById("login").style.display = "inline-block";
-}
+window.onload = () => {
+  try {
+    courses = JSON.parse(window.localStorage.getItem("studentCourses"));
+    form.elements[1].value = window.localStorage.getItem("username");
+    makeButtons(courses);
+  } catch (err) {
+    showModal();
+  }
+};
 
-function getCourses() {
-  const URL = "https://dwight.instructure.com/api/v1/courses";
-  let newWin = window.open(URL, "", "popup");
-}
+// Make Chats
 
 function makeButtons(cs) {
   let classes = document.getElementById("courses");
@@ -74,7 +72,11 @@ function makeButtons(cs) {
               `${snap.val()[key].user}: ${snap.val()[key].msg}` + "\n";
           }
           document.getElementById("textOutput").innerHTML = outputString;
-        } else if (confirm(`No chat exists for this course. Make new chat for course "${e.target.value}"?`)) {
+        } else if (
+          confirm(
+            `No chat exists for this course. Make new chat for course "${e.target.value}"?`
+          )
+        ) {
           set(ref(database, `messages/${messagePath}/${Date.now()}`), {
             msg: `Welcome to ${e.target.value}!`,
             user: form.elements[1].value,
@@ -87,28 +89,37 @@ function makeButtons(cs) {
 
           document.getElementById("textOutput").innerHTML = outputString;
         } else {
-          messagePath = '';
+          messagePath = "";
         }
-        
-      })
-
-    })
+      });
+    });
   }
 }
 
-document.getElementById('getCourses').addEventListener('submit', (e) => {
-  e.preventDefault();
-  let entry = document.getElementById('coursesEntry');
-  courses = JSON.parse(entry.value).filter(o => (o.start_at.split('-')[0] == '2021')).map((i) => {
-    return {
-      Name: i.name,
-      ClassID: i.id,
-    }
+// modal window
+
+function showModal() {
+  let modal = document.getElementById("loginWindow");
+  setTimeout(() => {
+    modal.showModal();
+    modal.style.top = "0px";
+  }, 1000);
+
+  let courseForm = document.getElementById("courseForm");
+  courseForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    modal.close();
+    courses = JSON.parse(courseForm.elements[0].value)
+      .filter((o) => o.start_at.split("-")[0] == "2021")
+      .map((i) => {
+        return {
+          Name: i.name,
+          ClassID: i.id,
+        };
+      });
+
+    window.localStorage.setItem("studentCourses", JSON.stringify(courses));
+    entry.value = "";
+    makeButtons(courses);
   });
-
-  window.localStorage.setItem('studentCourses', JSON.stringify(courses));
-  entry.value = '';
-  makeButtons(courses);
-});
-
-
+}

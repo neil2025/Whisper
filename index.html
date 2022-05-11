@@ -1,86 +1,76 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Document</title>
-  <link rel="stylesheet" href="style.css">
+  <body>
+    <dialog class="modal" id="loginWindow">
+      <h2>Welcome to Whisper!</h2>
+      <p>The button below will redirect you to another page. Copy the contents of that page and paste it into the text entry field.</p>
+      <button onclick="window.open('https://dwight.instructure.com/api/v1/courses', '', 'popup')">
+        Login
+      </button>
+      <form id="courseForm">
+        <input type="text" />
+      </form>
+    </dialog>
 
-</head>
-
-<body>
     <div class="output">
       <p id="textOutput"></p>
     </div>
-
-    <div id="courses" class="wrap">
-      <form id="courseSelector">
-        
-      </form>
-    </div>
-    
+    <div class="courses"></div>
     <div class="wrap">
-      <form id = "sendForm" autocomplete="off">
-        <div class="row">
-          <label>Message: </label>
-          <input type="text" id = "message"/>
-        </div>
-        <div class="row">
-          <label>Name:</label>
-          <input type="text" id = "username"/>
-        </div>
-        <div class="row">
-          <input type="submit" value="Submit!">
-        </div>
+      <form id="sendForm" autocomplete="off">
+        <input type="text" id="username" />
+        <input type="text" />
+        <input type="submit" value="✔️" />
       </form>
     </div>
 
-    <div class="wrap" id="login" style="display: none;">
-      <button onClick="getCourses()">Login</button>
-      <form action="" id="getCourses" autocomplete="off">  
-        <input type="text" id="coursesEntry">
-        <p>Login will redirect, copy all content of redirect to text entry</p>
-      </form>
-    </div>
+    <script type="module">
+      // Import the functions you need from the SDKs you need
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.11/firebase-app.js";
+      import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.6.11/firebase-analytics.js";
+      import {
+        getDatabase,
+        ref,
+        set,
+        onValue,
+        get,
+        child,
+      } from "https://www.gstatic.com/firebasejs/9.6.11/firebase-database.js";
+      // TODO: Add SDKs for Firebase products that you want to use
+      // https://firebase.google.com/docs/web/setup#available-libraries
 
-  <script type="module">
-    // Import the functions you need from the SDKs you need
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.11/firebase-app.js";
-    import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.6.11/firebase-analytics.js";
-    import { getDatabase, ref, set, onValue, get, child} from "https://www.gstatic.com/firebasejs/9.6.11/firebase-database.js";
-    // TODO: Add SDKs for Firebase products that you want to use
-    // https://firebase.google.com/docs/web/setup#available-libraries
-  
-    // Your web app's Firebase configuration
-    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-    const firebaseConfig = {
-      apiKey: "AIzaSyChlawVUQ3xX8_6RkjzYLLyJtVX5ETAs9s",
-      authDomain: "whisper-41b5e.firebaseapp.com",
-      databaseURL: "https://whisper-41b5e-default-rtdb.firebaseio.com",
-      projectId: "whisper-41b5e",
-      storageBucket: "whisper-41b5e.appspot.com",
-      messagingSenderId: "395355701402",
-      appId: "1:395355701402:web:dd63d71a33a548cc199f23",
-      measurementId: "G-BDNHYDLVW4"
-    };
-  
-    // Initialize Firebase
-    window.app = initializeApp(firebaseConfig);
-    window.analytics = getAnalytics(app);
-    window.database = getDatabase();
-    window.ref = ref;
-    window.set = set;
-    window.onValue = onValue;
-    window.get = get;
-    window.child = child;
-  </script>
-  
-  <script src="script.js" defer></script>
+      // Your web app's Firebase configuration
+      // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+      const firebaseConfig = {
+        apiKey: "AIzaSyChlawVUQ3xX8_6RkjzYLLyJtVX5ETAs9s",
+        authDomain: "whisper-41b5e.firebaseapp.com",
+        databaseURL: "https://whisper-41b5e-default-rtdb.firebaseio.com",
+        projectId: "whisper-41b5e",
+        storageBucket: "whisper-41b5e.appspot.com",
+        messagingSenderId: "395355701402",
+        appId: "1:395355701402:web:dd63d71a33a548cc199f23",
+        measurementId: "G-BDNHYDLVW4",
+      };
 
-</body>
+      // Initialize Firebase
+      window.app = initializeApp(firebaseConfig);
+      window.analytics = getAnalytics(app);
+      window.database = getDatabase();
+      window.ref = ref;
+      window.set = set;
+      window.onValue = onValue;
+      window.get = get;
+      window.child = child;
+    </script>
 
+    <script src="script.js" defer></script>
+  </body>
 </html>
-
-
