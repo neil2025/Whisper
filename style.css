@@ -1,8 +1,15 @@
+/* variables */
+
+:root {
+  --defaultAccent: rgb(133, 139, 228);
+  --activeAccent: rgb(155, 159, 209);
+}
+
 /* Modal */
 
 .modal {
   position: absolute;
-  border-radius: 20px;
+  border-radius: 2em;
   width: 40%;
   animation: modalDrop 500ms;
 }
@@ -13,12 +20,18 @@
 }
 
 @keyframes modalDrop {
-  0% {top: -500%;}
-  100% {top: 0;}
+  0% {
+    top: -500%;
+  }
+  100% {
+    top: 0;
+  }
 }
 
 @keyframes darken {
-  0% {background: rgba(68, 66, 66, 0)}
+  0% {
+    background: rgba(68, 66, 66, 0);
+  }
 }
 
 /* Send Form */
@@ -30,29 +43,63 @@ form#sendForm {
   width: 80%;
   left: 50%;
   transform: translate(-50%, 0%);
-  border-radius: 10px;
-  filter: drop-shadow(0em 0em 0.5em rgba(60, 60, 60, 0.4));
+  border-radius: 1em;
+  box-shadow: 0em 0em 0.5em rgba(60, 60, 60, 0.4);
   transition: 500ms;
   border: 1px solid black;
+  padding-left: 0.2%;
 }
 
-form#sendForm > input[type= "text"] {
+form#sendForm > input[type="text"] {
   width: 100%;
   border-radius: 20em;
   border: none;
 }
 
-form#sendForm > input[type= "text"]:foc {
+/* Stop message input's border from glowing when focussed */
+form#sendForm > input[type="text"]:focus-visible {
+  box-shadow: none;
+  outline: 0;
+}
+
+form#sendForm:focus-within {
+  box-shadow: 0em 0em 0.6em rgba(60, 60, 60, 0.6);
+}
+
+form#sendForm > input[type="submit"] {
+  border-radius: 20em;
+  border: none;
+  background-color: var(--defaultAccent);
+}
+
+form#sendForm > input[type="submit"]:hover {
+  background-color: var(--activeAccent);
+}
+
+/* course selector */
+
+div#courses {
+  position: absolute;
+  right: -10%;
+  top: 10%;
+  width: 25em;
+  transition: 500ms;
+}
+
+div#courses > div {
+  padding-top: 1em;
+}
+
+div#courses > div:hover {
+  right: 0%;
+}
+
+div#courses > div > input[type= "button"] {
   width: 100%;
-  border-radius: 20em;
-  border: none;
+  text-align: left;
+  background-color: var(--defaultAccent);
 }
 
-form#sendForm > input[type= "submit"] {
-  border-radius: 20em;
-  border: none;
-}
-
-form#sendForm:hover {
-  filter: drop-shadow(0em 0em 0.7em rgba(60, 60, 60, 0.6));
+div#courses > div > input[type= "button"]:hover {
+  background-color: var(--activeAccent);
 }
