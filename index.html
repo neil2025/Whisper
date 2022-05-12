@@ -11,17 +11,22 @@
   <body>
     <dialog class="modal" id="loginWindow">
       <h2>Welcome to Whisper!</h2>
-      <p>The button below will redirect you to another page. Copy the contents of that page and paste it into the appropriate text entry field.</p>
-      <button onclick="window.open('https://dwight.instructure.com/api/v1/courses', '', 'popup')">
+      <p>
+        The button below will redirect you to another page. Copy the contents of
+        that page and paste it into the appropriate text entry field.
+      </p>
+      <button
+        onclick="window.open('https://dwight.instructure.com/api/v1/courses', '', 'popup')"
+      >
         Login
       </button>
 
-      <form id="courseForm" style="display: grid;" autocomplete="off">
+      <form id="courseForm" style="display: grid" autocomplete="off">
         <label for="canvasCopy">Paste Data Here: </label>
-        <input type="text" name="canvasCopy"/>
+        <input type="text" name="canvasCopy" />
         <label for="username">Username: </label>
-        <input type="text" name="username" >
-        <input type="submit" value="Submit">
+        <input type="text" name="username" />
+        <input type="submit" value="Submit" />
       </form>
     </dialog>
 
@@ -29,10 +34,10 @@
 
     <div id="courses"></div>
 
-      <form id="sendForm" autocomplete="off">
-        <input type="text"/>
-        <input type="submit" value="✔️" />
-      </form>
+    <form id="sendForm" autocomplete="off">
+      <input type="text" />
+      <input type="submit" value="✔️" />
+    </form>
 
     <script type="module">
       // Import the functions you need from the SDKs you need

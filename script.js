@@ -96,7 +96,6 @@ function showModal() {
   let modal = document.getElementById("loginWindow");
   setTimeout(() => {
     modal.showModal();
-    modal.style.top = "0px";
   }, 500);
 
   let courseForm = document.getElementById("courseForm");

@@ -2,8 +2,57 @@
 
 .modal {
   position: absolute;
-  top: -1000%;
   border-radius: 20px;
   width: 40%;
-  transition: 1s;
+  animation: modalDrop 500ms;
+}
+
+.modal::backdrop {
+  background: rgba(68, 66, 66, 0.5);
+  animation: darken 500ms;
+}
+
+@keyframes modalDrop {
+  0% {top: -500%;}
+  100% {top: 0;}
+}
+
+@keyframes darken {
+  0% {background: rgba(68, 66, 66, 0)}
+}
+
+/* Send Form */
+
+form#sendForm {
+  position: absolute;
+  display: flex;
+  bottom: 2em;
+  width: 80%;
+  left: 50%;
+  transform: translate(-50%, 0%);
+  border-radius: 10px;
+  filter: drop-shadow(0em 0em 0.5em rgba(60, 60, 60, 0.4));
+  transition: 500ms;
+  border: 1px solid black;
+}
+
+form#sendForm > input[type= "text"] {
+  width: 100%;
+  border-radius: 20em;
+  border: none;
+}
+
+form#sendForm > input[type= "text"]:foc {
+  width: 100%;
+  border-radius: 20em;
+  border: none;
+}
+
+form#sendForm > input[type= "submit"] {
+  border-radius: 20em;
+  border: none;
+}
+
+form#sendForm:hover {
+  filter: drop-shadow(0em 0em 0.7em rgba(60, 60, 60, 0.6));
 }
