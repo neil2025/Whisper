@@ -9,6 +9,7 @@
   </head>
 
   <body>
+    <!-- Login Modal -->
     <dialog class="modal" id="loginWindow">
       <h2>Welcome to Whisper!</h2>
       <p>
@@ -20,7 +21,6 @@
       >
         Login
       </button>
-
       <form id="courseForm" style="display: grid" autocomplete="off">
         <label for="canvasCopy">Paste Data Here: </label>
         <input type="text" name="canvasCopy" />
@@ -29,11 +29,13 @@
         <input type="submit" value="Submit" />
       </form>
     </dialog>
+    <!-- where the messages appear -->
+    <div id="textOutput"></div>
 
-    <pre id="textOutput"></pre>
-
+    <!-- selector for chats -->
     <div id="courses"></div>
 
+    <!-- text window for sending -->
     <form id="sendForm" autocomplete="off">
       <input type="text" />
       <input type="submit" value="✔️" />
@@ -51,11 +53,7 @@
         get,
         child,
       } from "https://www.gstatic.com/firebasejs/9.6.11/firebase-database.js";
-      // TODO: Add SDKs for Firebase products that you want to use
-      // https://firebase.google.com/docs/web/setup#available-libraries
 
-      // Your web app's Firebase configuration
-      // For Firebase JS SDK v7.20.0 and later, measurementId is optional
       const firebaseConfig = {
         apiKey: "AIzaSyChlawVUQ3xX8_6RkjzYLLyJtVX5ETAs9s",
         authDomain: "whisper-41b5e.firebaseapp.com",

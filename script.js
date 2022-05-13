@@ -15,18 +15,26 @@ form.addEventListener("submit", (e) => {
 });
 // append new changes to 'output' div
 
+function updateChat(scope) {
+  let newElement;
+  let textOutput = document.querySelector("#textOutput");
+  textOutput.innerHTML = "";
+  for (key in scope) {
+    newElement = document.createElement("p");
+    newElement.appendChild(
+      document.createTextNode(`${scope[key].user}: ${scope[key].msg}`)
+    );
+    textOutput.appendChild(newElement);
+  }
+  textOutput.scrollTop = textOutput.scrollHeight;
+}
+
 onValue(ref(database, `messages/`), (snap) => {
-  let value;
   if (messagePath !== "") {
-    value = snap.val()[messagePath];
+    updateChat(snap.val()[messagePath]);
   } else {
-    value = snap.val();
+    textOutput.innerHTML = "Please Select a Class to Chat in";
   }
-  outputString = "";
-  for (key in value) {
-    outputString += `${value[key].user}: ${value[key].msg}` + "\n";
-  }
-  document.getElementById("textOutput").innerHTML = outputString;
 });
 
 // Get Canvas Class Data
@@ -51,9 +59,10 @@ function makeButtons(cs) {
     inp.setAttribute("type", "button");
     inp.setAttribute("value", item.Name);
 
-    let newDiv = document.createElement("div");
-    newDiv.appendChild(inp);
-    classes.appendChild(newDiv);
+    // let newDiv = document.createElement("div");
+    // newDiv.appendChild(inp);
+    // classes.appendChild(newDiv);
+    classes.appendChild(inp);
 
     document.getElementById(item.ClassID).addEventListener("click", (e) => {
       messagePath = `${e.target.id}`;
@@ -61,27 +70,13 @@ function makeButtons(cs) {
       get(child(ref(database), `messages/${messagePath}/`)).then((snap) => {
         outputString = "";
         if (snap.exists()) {
-          for (key in snap.val()) {
-            outputString +=
-              `${snap.val()[key].user}: ${snap.val()[key].msg}` + "\n";
-          }
-          document.getElementById("textOutput").innerHTML = outputString;
+          updateChat(snap.val());
         } else if (
-          confirm(
-            `No chat exists for this course. Make new chat for course "${e.target.value}"?`
-          )
-        ) {
+          confirm(`No chat exists for this course. Make new chat for course "${e.target.value}"?`)) {
           set(ref(database, `messages/${messagePath}/${Date.now()}`), {
             msg: `Welcome to ${e.target.value}!`,
-            user: window.localStorage.getItem('username'),
+            user: window.localStorage.getItem("username"),
           });
-
-          for (key in snap.val()) {
-            outputString +=
-              `${snap.val()[key].user}: ${snap.val()[key].msg}` + "\n";
-          }
-
-          document.getElementById("textOutput").innerHTML = outputString;
         } else {
           messagePath = "";
         }
@@ -105,7 +100,7 @@ function showModal() {
     for (let b of courseForm.elements) {
       formData.push(b.value);
     }
-    if (!formData.includes('')) {
+    if (!formData.includes("")) {
       modal.close();
       courses = JSON.parse(courseForm.elements[0].value)
         .filter((o) => o.start_at.split("-")[0] == "2021")
@@ -118,9 +113,18 @@ function showModal() {
 
       window.localStorage.setItem("studentCourses", JSON.stringify(courses));
       window.localStorage.setItem("username", courseForm.elements[1].value);
-      makeButtons(courses)
+      makeButtons(courses);
     } else {
-      alert('Please Fill al Fields'); // This is temporary, add css-based alert later
+      alert("Please Fill al Fields"); // This is temporary, add css-based alert later
     }
   });
+}
+
+// settings window
+
+// Clear All Chats
+
+function clearChat() {
+  set(ref(database, `messages`), '');
+  
 }
