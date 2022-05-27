@@ -4,25 +4,27 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Whisper</title>
     <link rel="stylesheet" href="style.css" />
   </head>
 
   <body>
+
     <!-- Login Modal -->
     <dialog class="modal" id="loginWindow">
       <h2>Welcome to Whisper!</h2>
       <p>
-        The button below will redirect you to another page. Copy the contents of
+        The button below [Open Canvas] will redirect you to another page. Copy the contents of
         that page and paste it into the appropriate text entry field.
       </p>
       <button
         onclick="window.open('https://dwight.instructure.com/api/v1/courses', '', 'popup')"
       >
-        Login
+        Open Canvas
       </button>
+
       <form id="courseForm" style="display: grid" autocomplete="off">
-        <label for="canvasCopy">Paste Data Here: </label>
+        <label for="canvasCopy">Paste Here: </label>
         <input type="text" name="canvasCopy" />
         <label for="username">Username: </label>
         <input type="text" name="username" />
@@ -41,6 +43,36 @@
       <input type="submit" value="✔️" />
     </form>
 
+    <!-- Change Name -->
+    <div id="settingsWindow">
+      <img src="Gear.webp" alt="gear" id="gear" onclick="console.log('test')" />
+      <h1>Display Settings</h1>
+      <form action="">
+        <div>
+          <input type="color" name="--backgroundColor" />
+          <label for="backgroundColor">Background Color</label>
+        </div>
+
+        <div>
+          <input type="color" name="--defaultAccent" />
+          <label for="defaulAccent">Accent Color</label>
+        </div>
+
+        <div>
+          <input type="color" name="--activeAccent" />
+          <label for="activeAccent">Highlight Color</label>
+        </div>
+        <div>
+          <input type="color" name="--textColor" id="" />
+          <label for="textColor">Text Color</label>
+        </div>
+      </form>
+      <h1>General Settings</h1>
+      <form action="">
+        <label for="name" >Username</label>
+        <input type="text" id="changeName" name="name">
+      </form>
+    </div>
     <script type="module">
       // Import the functions you need from the SDKs you need
       import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.11/firebase-app.js";

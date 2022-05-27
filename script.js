@@ -1,3 +1,48 @@
+// settings window
+
+let settingsWindow = document.querySelector("#settingsWindow");
+let gear = document.querySelector("#gear");
+
+gear.onclick = () => {
+  if (settingsWindow.offsetLeft < 0) {
+    settingsWindow.style.left = "-0%";
+    gear.style.transform = "rotate(90deg)";
+  } else if (settingsWindow.offsetLeft == 0) {
+    settingsWindow.style.left = "-22.5%";
+    gear.style.transform = "rotate(0deg)";
+  }
+};
+
+const settingsForm = document.querySelector("#settingsWindow > form");
+const root = document.querySelector(":root");
+const compStyle = getComputedStyle(root);
+const defaultColors = {
+  '--activeAccent': compStyle.getPropertyValue('--activeAccent'),
+  '--defaultAccent': compStyle.getPropertyValue('--defaultAccent'),
+  '--highlightColor': compStyle.getPropertyValue('--highlightColor'),
+  '--backgroundColor': compStyle.getPropertyValue('--backgroundColor'),
+  '--textColor': compStyle.getPropertyValue('--textColor'),
+}
+for (let elem of settingsForm.elements) {
+  if (localStorage.getItem(elem.name) == null) {
+    localStorage.setItem(elem.name, defaultColors[elem.name])
+  } else {
+    elem.value = localStorage.getItem(elem.name);
+    root.style.setProperty(elem.name, elem.value);
+  }
+  elem.addEventListener("input", (e) => {
+    root.style.setProperty(e.target.name, e.target.value);
+    localStorage.setItem(e.target.name, e.target.value)
+  });
+  
+}
+
+const nameChange = document.querySelector('#changeName');
+nameChange.value = localStorage.getItem('username')
+nameChange.addEventListener('input', (e) => {
+  localStorage.setItem('username', e.target.value);
+})
+
 // send messages
 var form = document.getElementById("sendForm");
 var messagePath = ``;
@@ -55,14 +100,12 @@ function makeButtons(cs) {
   for (let item of cs) {
     let inp = document.createElement("input");
     inp.setAttribute("id", item.ClassID);
-    inp.setAttribute("class", "courseButton");
     inp.setAttribute("type", "button");
     inp.setAttribute("value", item.Name);
 
-    // let newDiv = document.createElement("div");
-    // newDiv.appendChild(inp);
-    // classes.appendChild(newDiv);
-    classes.appendChild(inp);
+    let newDiv = document.createElement("div");
+    newDiv.appendChild(inp);
+    classes.appendChild(newDiv)
 
     document.getElementById(item.ClassID).addEventListener("click", (e) => {
       messagePath = `${e.target.id}`;
@@ -72,7 +115,10 @@ function makeButtons(cs) {
         if (snap.exists()) {
           updateChat(snap.val());
         } else if (
-          confirm(`No chat exists for this course. Make new chat for course "${e.target.value}"?`)) {
+          confirm(
+            `No chat exists for this course. Make new chat for course "${e.target.value}"?`
+          )
+        ) {
           set(ref(database, `messages/${messagePath}/${Date.now()}`), {
             msg: `Welcome to ${e.target.value}!`,
             user: window.localStorage.getItem("username"),
@@ -83,6 +129,10 @@ function makeButtons(cs) {
       });
     });
   }
+  let items = document.querySelectorAll("div#courses > div");
+  items.forEach((i) => {
+    i.style.height = `${100 / cs.length}%`;
+  });
 }
 
 // modal window
@@ -120,11 +170,14 @@ function showModal() {
   });
 }
 
-// settings window
-
 // Clear All Chats
 
+//hey! no peeking!
 function clearChat() {
-  set(ref(database, `messages`), '');
-  
+  if (prompt("Clear All Chats?") === "Yes") {
+    set(ref(database, `messages`), "");
+    alert("cleared");
+  } else {
+    alert("Not Clearing");
+  }
 }

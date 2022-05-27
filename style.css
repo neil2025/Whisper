@@ -1,14 +1,23 @@
-body {
-  overflow: hidden;
-  font-family: 'helvetica';
-}
-
 /* variables */
 
 :root {
-  --activeAccent: #ffa9fa;
-  --defaultAccent: #ffaa9f;
-  --highlightColor: aliceblue;
+  --activeAccent:#ffa9fa;
+  --defaultAccent:#ec9d98;
+  --highlightColor:#f0f8ff;
+  --backgroundColor:#ffffff;
+  --textColor:#000000;
+}
+
+body {
+  overflow: hidden;
+  font-family: 'helvetica';
+  background-color: var(--backgroundColor);
+}
+
+/* overall styling */
+
+button {
+  border-radius: 2em;
 }
 
 /* Modal */
@@ -46,7 +55,7 @@ body {
 form#sendForm {
   position: absolute;
   display: flex;
-  bottom: 2em;
+  bottom: 4%;
   width: 80%;
   left: 50%;
   transform: translate(-50%, 0%);
@@ -61,6 +70,8 @@ form#sendForm > input[type="text"] {
   width: 100%;
   border-radius: 20em;
   border: none;
+  background-color: var(--backgroundColor);
+  color: var(--textColor);
 }
 
 /* Stop message input's border from glowing when focussed */
@@ -88,29 +99,38 @@ form#sendForm > input[type="submit"]:hover {
 
 div#courses {
   position: absolute;
-  right: -11.5%;
+  right: -10%;
   top: 10%;
-  width: 30em;
+  width: 30%;
+  height: 30%;
   transition: 500ms;
 }
 
+div#courses > div {
+  width: 85%;
+  height: 0;
+  margin-left: 15%;
+  transition: 300ms;
+}
+
+div#courses > div:hover {
+  margin-left: 5%;
+}
+
 /* course buttons */
-div#courses > input[type="button"] {
-  width: 80%;
+div#courses > div > input[type="button"] {
+  width: 100%;
   text-align: left;
   background-color: var(--defaultAccent);
   transition: 300ms;
   border: none;
   border-radius: 2em;
-  height: 3em;
-  padding-left: 1em;
-  margin-bottom: 1.5em;
-  margin-left: 20%;
+  height: 80%;
+  padding-left: 5%;
 }
 
-div#courses > input[type="button"]:hover {
+div#courses > div > input[type="button"]:hover {
   background-color: var(--activeAccent);
-  margin-left: 10%;
 }
 
 /* text output area */
@@ -118,10 +138,13 @@ div#courses > input[type="button"]:hover {
 #textOutput {
   overflow-y: auto;
   position: absolute;
-  height: 44em;
+  height: 70%;
   width: 70%;
+  top: 10%;
   left: 45%;
   transform: translate(-50%, 0);
+  padding: 1em;
+
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
@@ -136,4 +159,52 @@ div#courses > input[type="button"]:hover {
 
 #textOutput > p:hover {
   background-color: var(--highlightColor);
+}
+
+/* Settings Window */
+#gear {
+  position: absolute;
+  width: 20%;
+  right: -10%;
+  transition: 500ms;
+  transition-timing-function: ease-in-out;
+  top: 4%;
+  z-index: 0;
+  cursor: pointer;
+}
+
+#settingsWindow {
+  position: absolute;
+  height: 100%;
+  width: 20%;
+  background-color: lightgrey;
+  left: -22.5%;
+  transition: 500ms;
+  z-index: 1;
+  padding: 1em;
+  transition-timing-function: ease-out;
+
+}
+
+#settingsWindow >  form {
+  display: inline;
+}
+
+#settingsWindow >  form > div{
+  padding: 1em;
+}
+
+input[type="color"] {
+	border: none;
+  border-radius: 40px;
+  width: 40px;
+  height: 40px;
+  background: none;
+}
+
+input[type="color"]::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+input[type="color"]::-webkit-color-swatch {
+  border-radius: 40px;
 }
