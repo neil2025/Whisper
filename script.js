@@ -19,13 +19,13 @@ const compStyle = getComputedStyle(root);
 const defaultColors = {
   '--activeAccent': compStyle.getPropertyValue('--activeAccent'),
   '--defaultAccent': compStyle.getPropertyValue('--defaultAccent'),
-  '--highlightColor': compStyle.getPropertyValue('--highlightColor'),
   '--backgroundColor': compStyle.getPropertyValue('--backgroundColor'),
   '--textColor': compStyle.getPropertyValue('--textColor'),
 }
 for (let elem of settingsForm.elements) {
   if (localStorage.getItem(elem.name) == null) {
     localStorage.setItem(elem.name, defaultColors[elem.name])
+    root.style.setProperty(elem.name, defaultColors[elem.name]);
   } else {
     elem.value = localStorage.getItem(elem.name);
     root.style.setProperty(elem.name, elem.value);

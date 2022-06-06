@@ -3,7 +3,6 @@
 :root {
   --activeAccent:#ffa9fa;
   --defaultAccent:#ec9d98;
-  --highlightColor:#f0f8ff;
   --backgroundColor:#ffffff;
   --textColor:#000000;
 }
@@ -156,10 +155,6 @@ div#courses > div > input[type="button"]:hover {
 
 #textOutput > p {
   margin: 0.5em;
-}
-
-#textOutput > p:hover {
-  background-color: var(--highlightColor);
 }
 
 /* Settings Window */
